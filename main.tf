@@ -117,3 +117,38 @@ resource "aws_route_table_association" "database_route_table_association_2" {
   route_table_id = aws_route_table.database_route_table.id
 
 }
+
+resource "aws_security_group" "SG" {
+  vpc_id = aws_vpc.myvpc.id
+  description = "allow all inbound traffic"
+
+  ingress = [ 
+    {
+    description = "All traffic"
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = [ "0.0.0.0/0" ]
+    ipv6_cidr_blocks = null
+    prefix_list_ids = null
+    security_groups = null
+    self = null
+    }
+  ]
+  egress = [ 
+    {
+      description = "All traffic"
+      from_port = 0
+      to_port = 0
+      protocol = "-1"
+      cidr_blocks = [ "0.0.0.0/0" ]
+      ipv6_cidr_blocks = null
+      prefix_list_ids = null
+      security_groups = null
+      self = null
+    }
+  ] 
+  tags = {
+    Name = "${var.project}-${var.Env}-SG"
+  }
+}
